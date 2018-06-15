@@ -1,6 +1,6 @@
 # posts/views.py
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import Post
 from .forms import BlogPostForm
 
