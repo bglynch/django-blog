@@ -19,7 +19,7 @@ def post_detail(request, pk):
     post.save()
     return render(request, "posts/postdetail.html", {'post': post})
     
-def create_or_edit_post(request, pk=None):
+def create_or_edit_post(request, pk=None): #if pk doesnt exist, set value yo none
     """
     Create a view that allows us to create
     or edit a post depending if the Post ID
