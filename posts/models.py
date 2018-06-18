@@ -1,5 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='[user deleted]')[0]
 
 class Post(models.Model):
     """
@@ -12,6 +18,8 @@ class Post(models.Model):
     views = models.IntegerField(default=0)
     tag = models.CharField(max_length=30, blank=True, null=True)
     image = models.ImageField(upload_to="images", blank=True, null=True)
+    author = models.ForeignKey(User, related_name='posts', on_delete=models.SET(get_sentinel_user), null=False)
+
     
     def __str__(self):
         return self.title
