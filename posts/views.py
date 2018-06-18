@@ -19,21 +19,27 @@ def post_detail(request, pk):
     post.save()
     return render(request, "posts/postdetail.html", {'post': post})
     
-def create_or_edit_post(request, pk=None): #if pk doesnt exist, set value yo none
-    """
-    Create a view that allows us to create
-    or edit a post depending if the Post ID
-    is null or not
-    """
-    post = get_object_or_404(Post, pk=pk) if pk else None
+def new_post(request):
+    if request.method == "POST":
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('post_detail', post.pk)
+    else:
+        form = BlogPostForm()
+        
+    return render(request, 'posts/blogpostform.html', {'form': form})
+        
+        
+def edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = BlogPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post = form.save(commit = False)
-            if not post.author:
-                post.author = request.user
-            post.save()
-            return redirect(post_detail, post.pk)
+            post = form.save()
+            return redirect('post_detail', post.pk)        
     else:
         form = BlogPostForm(instance=post)
     return render(request, 'posts/blogpostform.html', {'form': form})
