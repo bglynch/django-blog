@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from .forms import UserLoginForm, UserRegistrationForm
+from posts.models import Post
 
 # Create your views here.
 def login(request):
@@ -51,7 +52,7 @@ def logout(request):
     return redirect('/')
 
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    return render(request, 'accounts/profile.html' , {'posts':posts})
 
   
     
