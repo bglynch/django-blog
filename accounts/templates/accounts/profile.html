@@ -14,7 +14,7 @@
 <h4>Posts You've Liked</h4>
 
 {% for post in user.liked_posts.all %}
-<p><a href="{% url 'post_detail' post.id %}"  class="btn btn-default">{{post.title}}</a></p>
+    <p><a href="{% url 'post_detail' post.id %}"  class="btn btn-default">{{post.title}}</a></p>
 {% endfor %}
 
 

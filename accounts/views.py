@@ -52,7 +52,4 @@ def logout(request):
     return redirect('/')
 
 def profile(request):
-    return render(request, 'accounts/profile.html' , {'posts':posts})
-
-  
-    
+    return render(request, 'accounts/profile.html')
